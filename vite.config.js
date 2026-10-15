@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": "http://localhost:8080",
+      '/api': {
+        target: 'https://flowra-backend-1.onrender.com',
+        changeOrigin: true,
+      },
     },
   },
 })

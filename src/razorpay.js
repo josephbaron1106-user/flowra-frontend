@@ -8,7 +8,29 @@
  */
 
 const apiBaseUrl = (import.meta.env.VITE_PAYMENT_API_URL || "https://flowra-backend-1.onrender.com").replace(/\/$/, "");
-const defaultClientKey = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_TdVV3x1sj1qTZy";
+export const DEFAULT_RAZORPAY_KEY = "rzp_test_TdVV3x1sj1qTZy";
+
+export function getEffectiveKey(keyCandidate) {
+  if (
+    keyCandidate &&
+    typeof keyCandidate === "string" &&
+    !keyCandidate.includes("YOUR_") &&
+    !keyCandidate.includes("5173FlowraKey") &&
+    keyCandidate.startsWith("rzp_")
+  ) {
+    return keyCandidate.trim();
+  }
+  const envKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
+  if (
+    envKey &&
+    typeof envKey === "string" &&
+    !envKey.includes("5173FlowraKey") &&
+    envKey.startsWith("rzp_")
+  ) {
+    return envKey.trim();
+  }
+  return DEFAULT_RAZORPAY_KEY;
+}
 
 /**
  * Dynamically loads the official Razorpay Checkout script if not already present.
@@ -86,7 +108,7 @@ export async function createRazorpayOrder(items = [], promoCode = "", totalAmoun
     // Graceful fallback for local development or direct client testing
     const calculatedAmountPaise = Math.round((Number(totalAmount) || 0) * 100);
     return {
-      keyId: defaultClientKey,
+      keyId: getEffectiveKey(),
       razorpayOrderId: null, // Client-side checkout when backend order is not generated
       amount: (calculatedAmountPaise > 0 ? calculatedAmountPaise : 10000) / 100,
       amountInPaise: calculatedAmountPaise > 0 ? calculatedAmountPaise : 10000,
@@ -145,7 +167,7 @@ export async function initiateRazorpayPayment({
 
   // 2. Prepare Order
   const order = await createRazorpayOrder(items, promoCode, totalAmount);
-  const keyToUse = order.keyId || defaultClientKey;
+  const keyToUse = getEffectiveKey(order?.keyId);
   const amountToPay = order.amountInPaise
     ? Number(order.amountInPaise)
     : Math.round((Number(order.amount) || Number(totalAmount) || 0) * 100);

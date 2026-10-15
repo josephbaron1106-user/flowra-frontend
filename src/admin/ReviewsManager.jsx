@@ -16,7 +16,7 @@ function ReviewsManager() {
   const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/reviews")
+    fetch("https://flowra-backend-1.onrender.com/api/reviews")
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -48,7 +48,7 @@ function ReviewsManager() {
   const handleToggleStatus = (id) => {
     const target = reviews.find((r) => r.id === id);
     if (target && target.dbId) {
-      fetch(`http://localhost:8080/api/reviews/${target.dbId}/toggle`, { method: "PUT" }).catch(console.warn);
+      fetch(`https://flowra-backend-1.onrender.com/api/reviews/${target.dbId}/toggle`, { method: "PUT" }).catch(console.warn);
     }
     setReviews((prev) =>
       prev.map((r) => (r.id === id ? { ...r, status: r.status === "Approved" ? "Hidden" : "Approved" } : r))
@@ -60,7 +60,7 @@ function ReviewsManager() {
     if (window.confirm("Delete this review permanently?")) {
       const target = reviews.find((r) => r.id === id);
       if (target && target.dbId) {
-        fetch(`http://localhost:8080/api/reviews/${target.dbId}`, { method: "DELETE" }).catch(console.warn);
+        fetch(`https://flowra-backend-1.onrender.com/api/reviews/${target.dbId}`, { method: "DELETE" }).catch(console.warn);
       }
       setReviews((prev) => prev.filter((r) => r.id !== id));
       triggerToast("Review deleted.");
@@ -70,7 +70,7 @@ function ReviewsManager() {
   const handleSendReply = (e) => {
     e.preventDefault();
     if (replyingTo && replyingTo.dbId) {
-      fetch(`http://localhost:8080/api/reviews/${replyingTo.dbId}/reply`, {
+      fetch(`https://flowra-backend-1.onrender.com/api/reviews/${replyingTo.dbId}/reply`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ adminReply: replyText }),

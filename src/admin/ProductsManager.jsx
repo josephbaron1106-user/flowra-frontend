@@ -176,7 +176,7 @@ function ProductsManager() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/products")
+    fetch("https://flowra-backend-1.onrender.com/api/products")
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -264,7 +264,7 @@ function ProductsManager() {
 
     if (editingProduct) {
       if (editingProduct.dbId) {
-        fetch(`http://localhost:8080/api/products/${editingProduct.dbId}`, {
+        fetch(`https://flowra-backend-1.onrender.com/api/products/${editingProduct.dbId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -276,7 +276,7 @@ function ProductsManager() {
       triggerToast(`Product "${formData.name}" updated successfully! 🌸`);
     } else {
       try {
-        const res = await fetch("http://localhost:8080/api/products", {
+        const res = await fetch("https://flowra-backend-1.onrender.com/api/products", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -310,7 +310,7 @@ function ProductsManager() {
     if (window.confirm(`Are you sure you want to delete "${name}" from catalog?`)) {
       const prod = products.find((p) => p.id === id);
       if (prod && prod.dbId) {
-        fetch(`http://localhost:8080/api/products/${prod.dbId}`, { method: "DELETE" }).catch(console.warn);
+        fetch(`https://flowra-backend-1.onrender.com/api/products/${prod.dbId}`, { method: "DELETE" }).catch(console.warn);
       }
       setProducts((prev) => prev.filter((p) => p.id !== id));
       triggerToast(`Product "${name}" deleted.`);

@@ -112,7 +112,7 @@ function Orders() {
 
     let backendList = [];
     try {
-      const res = await fetch("http://localhost:8080/api/orders");
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/orders");
       if (res.ok) {
         const data = await res.json();
         if (Array.isArray(data)) {

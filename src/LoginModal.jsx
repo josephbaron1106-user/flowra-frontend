@@ -20,7 +20,7 @@ function LoginModal() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/api/users/login", {
+      const response = await fetch("https://flowra-backend-1.onrender.com/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -50,7 +50,7 @@ function LoginModal() {
       handleAuthSuccess(data);
     } catch (err) {
       console.error("LoginModal error:", err);
-      setErrorMessage("Unable to connect to Flowra server. Please verify backend is running on port 8080.");
+      setErrorMessage("Unable to connect to Flowra server. Please verify the backend service is running.");
       setIsLoading(false);
     }
   };

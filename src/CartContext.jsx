@@ -93,7 +93,7 @@ export function CartProvider({ children }) {
       const storedUser = JSON.parse(localStorage.getItem("flowra_user") || "null");
       const userId = storedUser?.id || 1;
       const prodId = (product.id && !isNaN(Number(product.id))) ? Number(product.id) : 1;
-      fetch("http://localhost:8080/api/cart", {
+      fetch("https://flowra-backend-1.onrender.com/api/cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -128,7 +128,7 @@ export function CartProvider({ children }) {
     try {
       const storedUser = JSON.parse(localStorage.getItem("flowra_user") || "null");
       const userId = storedUser?.id || 1;
-      fetch(`http://localhost:8080/api/cart/user/${userId}`, { method: "DELETE" }).catch(console.warn);
+      fetch(`https://flowra-backend-1.onrender.com/api/cart/user/${userId}`, { method: "DELETE" }).catch(console.warn);
     } catch (e) {}
     setCart([]);
   };
@@ -140,7 +140,7 @@ export function CartProvider({ children }) {
       const userId = storedUser?.id || 1;
       const prodId = (product.id && !isNaN(Number(product.id))) ? Number(product.id) : 1;
       if (!exists) {
-        fetch("http://localhost:8080/api/wishlist", {
+        fetch("https://flowra-backend-1.onrender.com/api/wishlist", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

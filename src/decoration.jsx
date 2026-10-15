@@ -85,7 +85,7 @@ function Decoration() {
   const handleInquirySubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:8080/api/decorations", {
+      await fetch("https://flowra-backend-1.onrender.com/api/decorations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

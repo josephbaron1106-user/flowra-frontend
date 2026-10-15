@@ -36,7 +36,7 @@ function OrderDetail() {
     if (!orderId) return;
 
     // 1. Fetch live order from Spring Boot backend
-    fetch(`http://localhost:8080/api/orders/number/${orderId}`)
+    fetch(`https://flowra-backend-1.onrender.com/api/orders/number/${orderId}`)
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data && data.orderNumber) {
@@ -315,7 +315,7 @@ function OrderDetail() {
     const targetDbId = order?.dbId || (order?.id && !isNaN(Number(order.id)) ? Number(order.id) : null);
     if (targetDbId) {
       try {
-        await fetch(`http://localhost:8080/api/orders/${targetDbId}/status`, {
+        await fetch(`https://flowra-backend-1.onrender.com/api/orders/${targetDbId}/status`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

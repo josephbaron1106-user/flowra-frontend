@@ -40,7 +40,7 @@ function CreateAccount() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/api/users", {
+      const response = await fetch("https://flowra-backend-1.onrender.com/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +74,7 @@ function CreateAccount() {
       }, 1200);
     } catch (err) {
       console.error("Account creation request error:", err);
-      setFormMessage("Unable to connect to the Flowra server. Please ensure the backend is running on port 8080.");
+      setFormMessage("Unable to connect to the Flowra server. Please ensure the backend service is running.");
       setIsLoading(false);
     }
   };

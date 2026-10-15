@@ -37,7 +37,7 @@ function CategoryManager() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/categories")
+    fetch("https://flowra-backend-1.onrender.com/api/categories")
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -96,7 +96,7 @@ function CategoryManager() {
 
     if (editingCategory) {
       if (editingCategory.dbId) {
-        fetch(`http://localhost:8080/api/categories/${editingCategory.dbId}`, {
+        fetch(`https://flowra-backend-1.onrender.com/api/categories/${editingCategory.dbId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -108,7 +108,7 @@ function CategoryManager() {
       triggerToast(`Category "${formData.name}" updated! 🌸`);
     } else {
       try {
-        const res = await fetch("http://localhost:8080/api/categories", {
+        const res = await fetch("https://flowra-backend-1.onrender.com/api/categories", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -141,7 +141,7 @@ function CategoryManager() {
     if (window.confirm(`Are you sure you want to delete category "${name}"?`)) {
       const cat = categories.find((c) => c.id === id);
       if (cat && cat.dbId) {
-        fetch(`http://localhost:8080/api/categories/${cat.dbId}`, { method: "DELETE" }).catch(console.warn);
+        fetch(`https://flowra-backend-1.onrender.com/api/categories/${cat.dbId}`, { method: "DELETE" }).catch(console.warn);
       }
       setCategories((prev) => prev.filter((c) => c.id !== id));
       triggerToast(`Category "${name}" removed.`);

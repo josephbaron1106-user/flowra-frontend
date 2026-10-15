@@ -10,7 +10,7 @@ function Footer() {
     e.preventDefault();
     if (email) {
       try {
-        await fetch("http://localhost:8080/api/newsletter", {
+        await fetch("https://flowra-backend-1.onrender.com/api/newsletter", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),

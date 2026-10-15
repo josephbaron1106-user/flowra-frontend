@@ -24,7 +24,7 @@ function CouponsManager() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/coupons")
+    fetch("https://flowra-backend-1.onrender.com/api/coupons")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -61,7 +61,7 @@ function CouponsManager() {
     const discountVal = parseFloat(String(newCoupon.value).replace(/[^\d.]/g, "")) || 10;
 
     try {
-      const res = await fetch("http://localhost:8080/api/coupons", {
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/coupons", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -108,7 +108,7 @@ function CouponsManager() {
   const handleToggleStatus = (id) => {
     const coupon = coupons.find((c) => c.id === id);
     if (coupon && coupon.dbId) {
-      fetch(`http://localhost:8080/api/coupons/${coupon.dbId}/toggle`, { method: "PUT" }).catch(console.warn);
+      fetch(`https://flowra-backend-1.onrender.com/api/coupons/${coupon.dbId}/toggle`, { method: "PUT" }).catch(console.warn);
     }
     setCoupons((prev) =>
       prev.map((c) => (c.id === id ? { ...c, status: c.status === "Active" ? "Disabled" : "Active" } : c))
@@ -120,7 +120,7 @@ function CouponsManager() {
     if (window.confirm(`Delete coupon "${code}"?`)) {
       const coupon = coupons.find((c) => c.id === id);
       if (coupon && coupon.dbId) {
-        fetch(`http://localhost:8080/api/coupons/${coupon.dbId}`, { method: "DELETE" }).catch(console.warn);
+        fetch(`https://flowra-backend-1.onrender.com/api/coupons/${coupon.dbId}`, { method: "DELETE" }).catch(console.warn);
       }
       setCoupons((prev) => prev.filter((c) => c.id !== id));
       triggerToast(`Coupon "${code}" deleted.`);

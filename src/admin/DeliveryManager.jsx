@@ -53,7 +53,7 @@ function DeliveryManager() {
   const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/deliveries")
+    fetch("https://flowra-backend-1.onrender.com/api/deliveries")
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -86,7 +86,7 @@ function DeliveryManager() {
   const handleStatusChange = (id, newStatus) => {
     const target = deliveries.find((d) => d.id === id);
     if (target && target.dbId) {
-      fetch(`http://localhost:8080/api/deliveries/${target.dbId}/status`, {
+      fetch(`https://flowra-backend-1.onrender.com/api/deliveries/${target.dbId}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),

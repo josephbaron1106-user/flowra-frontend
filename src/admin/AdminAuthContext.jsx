@@ -88,7 +88,7 @@ export function AdminAuthProvider({ children }) {
   }, [isAdminAuthenticated, adminUser]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/notifications")
+    fetch("https://flowra-backend-1.onrender.com/api/notifications")
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -134,7 +134,7 @@ export function AdminAuthProvider({ children }) {
   const markNotificationAsRead = (id) => {
     const target = notifications.find((n) => n.id === id);
     if (target && target.dbId) {
-      fetch(`http://localhost:8080/api/notifications/${target.dbId}/read`, { method: "PUT" }).catch(console.warn);
+      fetch(`https://flowra-backend-1.onrender.com/api/notifications/${target.dbId}/read`, { method: "PUT" }).catch(console.warn);
     }
     setNotifications((prev) =>
       prev.map((n) => (n.id === id ? { ...n, read: true } : n))
@@ -142,7 +142,7 @@ export function AdminAuthProvider({ children }) {
   };
 
   const markAllNotificationsAsRead = () => {
-    fetch("http://localhost:8080/api/notifications/read-all", { method: "PUT" }).catch(console.warn);
+    fetch("https://flowra-backend-1.onrender.com/api/notifications/read-all", { method: "PUT" }).catch(console.warn);
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
   };
 

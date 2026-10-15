@@ -74,7 +74,7 @@ function CustomerChat() {
     setInputText("");
 
     try {
-      await fetch("http://localhost:8080/api/chat/messages", {
+      await fetch("https://flowra-backend-1.onrender.com/api/chat/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

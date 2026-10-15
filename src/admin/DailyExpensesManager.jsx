@@ -103,7 +103,7 @@ function DailyExpensesManager() {
 
   // Sync to backend and localStorage
   useEffect(() => {
-    fetch("http://localhost:8080/api/expenses")
+    fetch("https://flowra-backend-1.onrender.com/api/expenses")
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -152,7 +152,7 @@ function DailyExpensesManager() {
     const catObj = CATEGORIES.find((c) => c.label === form.category) || { icon: "💸" };
 
     try {
-      const res = await fetch("http://localhost:8080/api/expenses", {
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/expenses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -233,7 +233,7 @@ function DailyExpensesManager() {
     if (window.confirm(`Delete expense record #${id}?`)) {
       const target = expenses.find((e) => e.id === id);
       if (target && target.dbId) {
-        fetch(`http://localhost:8080/api/expenses/${target.dbId}`, { method: "DELETE" }).catch(console.warn);
+        fetch(`https://flowra-backend-1.onrender.com/api/expenses/${target.dbId}`, { method: "DELETE" }).catch(console.warn);
       }
       setExpenses(expenses.filter((exp) => exp.id !== id));
       showToast(`Expense #${id} deleted.`);

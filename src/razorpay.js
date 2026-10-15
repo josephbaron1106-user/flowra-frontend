@@ -7,7 +7,7 @@
  * - Flowra branded checkout modal with customer prefill and event hooks
  */
 
-const apiBaseUrl = (import.meta.env.VITE_PAYMENT_API_URL || "http://localhost:8080").replace(/\/$/, "");
+const apiBaseUrl = (import.meta.env.VITE_PAYMENT_API_URL || "https://flowra-backend-1.onrender.com").replace(/\/$/, "");
 const defaultClientKey = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_TdVV3x1sj1qTZy";
 
 /**

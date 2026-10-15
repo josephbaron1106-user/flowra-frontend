@@ -34,7 +34,7 @@ function ProductDetail() {
 
   useEffect(() => {
     const pId = product.dbId || (product.id && !isNaN(Number(product.id)) ? Number(product.id) : 1);
-    fetch(`http://localhost:8080/api/reviews/product/${pId}`)
+    fetch(`https://flowra-backend-1.onrender.com/api/reviews/product/${pId}`)
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -53,7 +53,7 @@ function ProductDetail() {
     setIsSubmittingReview(true);
     const pId = product.dbId || (product.id && !isNaN(Number(product.id)) ? Number(product.id) : 1);
     try {
-      const res = await fetch("http://localhost:8080/api/reviews", {
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

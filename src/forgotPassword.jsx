@@ -17,7 +17,7 @@ function ForgotPassword() {
     setError("");
     setNotice("");
     try {
-      const res = await fetch("http://localhost:8080/api/auth/forgot-password", {
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim().toLowerCase() }),
@@ -68,7 +68,7 @@ function ForgotPassword() {
     event.preventDefault();
     const enteredCode = otp.join("");
     try {
-      const res = await fetch("http://localhost:8080/api/auth/verify-otp", {
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/auth/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim().toLowerCase(), otp: enteredCode }),

@@ -36,7 +36,7 @@ function AdminSettings() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/settings")
+    fetch("https://flowra-backend-1.onrender.com/api/settings")
       .then((r) => r.json())
       .then((data) => {
         if (data && typeof data === "object") {
@@ -70,7 +70,7 @@ function AdminSettings() {
       ...stockSettings,
     };
     try {
-      await fetch("http://localhost:8080/api/settings", {
+      await fetch("https://flowra-backend-1.onrender.com/api/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

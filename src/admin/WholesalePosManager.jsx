@@ -79,28 +79,28 @@ function WholesalePosManager() {
   const loadBackendData = async () => {
     try {
       // 1. Flowers
-      const flowersRes = await fetch("http://localhost:8080/api/flowers");
+      const flowersRes = await fetch("https://flowra-backend-1.onrender.com/api/flowers");
       if (flowersRes.ok) {
         const flowerData = await flowersRes.json();
         setFlowers(flowerData);
       }
 
       // 2. Suppliers
-      const suppliersRes = await fetch("http://localhost:8080/api/suppliers");
+      const suppliersRes = await fetch("https://flowra-backend-1.onrender.com/api/suppliers");
       if (suppliersRes.ok) {
         const supplierData = await suppliersRes.json();
         setSuppliers(supplierData);
       }
 
       // 3. Categories
-      const categoriesRes = await fetch("http://localhost:8080/api/categories");
+      const categoriesRes = await fetch("https://flowra-backend-1.onrender.com/api/categories");
       if (categoriesRes.ok) {
         const catData = await categoriesRes.json();
         setCategories(catData);
       }
 
       // 4. Purchases (Wholesale Inward History)
-      const purchasesRes = await fetch("http://localhost:8080/api/purchases");
+      const purchasesRes = await fetch("https://flowra-backend-1.onrender.com/api/purchases");
       if (purchasesRes.ok) {
         const purchaseData = await purchasesRes.json();
         const mappedPurchases = purchaseData.map((p) => ({
@@ -123,7 +123,7 @@ function WholesalePosManager() {
       }
 
       // 5. Sales (POS In-person history)
-      const salesRes = await fetch("http://localhost:8080/api/sales");
+      const salesRes = await fetch("https://flowra-backend-1.onrender.com/api/sales");
       if (salesRes.ok) {
         const salesData = await salesRes.json();
         const mappedSales = salesData.map((s) => ({
@@ -216,7 +216,7 @@ function WholesalePosManager() {
         imageUrl: newFlowerForm.imageUrl || "/src/assets/pictures/flowers1.jpg",
       };
 
-      const res = await fetch("http://localhost:8080/api/flowers", {
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/flowers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -283,7 +283,7 @@ function WholesalePosManager() {
         purchaseDate: wholesaleForm.purchaseDate || new Date().toISOString().split("T")[0],
       };
 
-      const res = await fetch("http://localhost:8080/api/purchases", {
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/purchases", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -402,7 +402,7 @@ function WholesalePosManager() {
         saleType: "POS",
       };
 
-      const res = await fetch("http://localhost:8080/api/sales", {
+      const res = await fetch("https://flowra-backend-1.onrender.com/api/sales", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -23,7 +23,7 @@ function AdminLayout({ children, pageTitle = "Dashboard" }) {
   const [activeOrdersCount, setActiveOrdersCount] = useState(0);
 
   const fetchActiveOrders = () => {
-    fetch("http://localhost:8080/api/orders")
+    fetch("https://flowra-backend-1.onrender.com/api/orders")
       .then((r) => r.json())
       .then((apiOrders) => {
         let allOrders = [];

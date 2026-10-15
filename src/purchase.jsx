@@ -145,7 +145,7 @@ function Purchase() {
         }),
       };
 
-      fetch("http://localhost:8080/api/orders", {
+      fetch("https://flowra-backend-1.onrender.com/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(apiOrderPayload),
@@ -162,7 +162,7 @@ function Purchase() {
 
       // Persist shipping address to addresses table
       const userIdForAddress = storedUser?.id || 1;
-      fetch("http://localhost:8080/api/addresses", {
+      fetch("https://flowra-backend-1.onrender.com/api/addresses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -35,7 +35,7 @@ function InventoryManager() {
   // Load real-time stock dashboard from backend
   const loadStockData = () => {
     setIsLoading(true);
-    fetch("http://localhost:8080/api/stock")
+    fetch("https://flowra-backend-1.onrender.com/api/stock")
       .then((r) => {
         if (!r.ok) throw new Error("Failed to load stock");
         return r.json();
@@ -62,7 +62,7 @@ function InventoryManager() {
 
   const handleUpdateThreshold = (flowerId, val) => {
     const num = Math.max(1, parseInt(val, 10) || 1);
-    fetch(`http://localhost:8080/api/stock/${flowerId}/threshold`, {
+    fetch(`https://flowra-backend-1.onrender.com/api/stock/${flowerId}/threshold`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ minThreshold: num }),

@@ -199,7 +199,7 @@ function OrdersManager() {
   const [isSubmittingCancel, setIsSubmittingCancel] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/orders")
+    fetch("https://flowra-backend-1.onrender.com/api/orders")
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -259,7 +259,7 @@ function OrdersManager() {
     const updatedPaymentStatus = (newStatus === "Delivered" && isCod) ? "Paid" : target?.paymentStatus || "Paid";
 
     if (target && target.dbId) {
-      fetch(`http://localhost:8080/api/orders/${target.dbId}/status`, {
+      fetch(`https://flowra-backend-1.onrender.com/api/orders/${target.dbId}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
@@ -346,7 +346,7 @@ function OrdersManager() {
 
     const orderDbId = target.dbId || (!isNaN(target.id) ? Number(target.id) : null);
     if (orderDbId) {
-      fetch(`http://localhost:8080/api/orders/${orderDbId}/status`, {
+      fetch(`https://flowra-backend-1.onrender.com/api/orders/${orderDbId}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

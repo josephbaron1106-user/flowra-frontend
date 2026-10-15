@@ -52,13 +52,19 @@ function CreateAccount() {
         }),
       });
 
-      const data = await response.json();
+      let data = {};
+      try {
+        const text = await response.text();
+        data = text ? JSON.parse(text) : {};
+      } catch (parseErr) {
+        data = {};
+      }
 
       if (!response.ok) {
         if (response.status === 400 && data.message && data.message.includes("already exists")) {
           setFormMessage("An account with this email already exists. Please sign in instead.");
         } else {
-          setFormMessage(data.message || "Failed to create account. Please check your information.");
+          setFormMessage(data.message || `Failed to create account (${response.status}). Please check your information.`);
         }
         setIsLoading(false);
         return;
@@ -74,7 +80,7 @@ function CreateAccount() {
       }, 1200);
     } catch (err) {
       console.error("Account creation request error:", err);
-      setFormMessage("Unable to connect to the Flowra server. Please ensure the backend service is running.");
+      setFormMessage("Connection to Flowra server failed. If the backend is waking up from idle, please wait 15-20 seconds and try again.");
       setIsLoading(false);
     }
   };

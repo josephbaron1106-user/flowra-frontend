@@ -29,7 +29,13 @@ function LoginModal() {
         }),
       });
 
-      const data = await response.json();
+      let data = {};
+      try {
+        const text = await response.text();
+        data = text ? JSON.parse(text) : {};
+      } catch (parseErr) {
+        data = {};
+      }
 
       if (!response.ok) {
         if (response.status === 404 || (data.message && data.message.includes("No account found"))) {
@@ -37,7 +43,7 @@ function LoginModal() {
         } else if (response.status === 400) {
           setErrorMessage(data.message || "Incorrect password. Please try again.");
         } else {
-          setErrorMessage(data.message || "Sign in failed. Please verify your credentials.");
+          setErrorMessage(data.message || `Sign in failed (${response.status}). Please verify your credentials.`);
         }
         setIsLoading(false);
         return;
@@ -50,7 +56,7 @@ function LoginModal() {
       handleAuthSuccess(data);
     } catch (err) {
       console.error("LoginModal error:", err);
-      setErrorMessage("Unable to connect to Flowra server. Please verify the backend service is running.");
+      setErrorMessage("Connection to Flowra server failed. If the backend is waking up from idle, please wait 15-20 seconds and click again.");
       setIsLoading(false);
     }
   };

@@ -1,0 +1,572 @@
+/* ==============================================================================
+   FLOWRA AI FLOWER SHOPPING ASSISTANT STYLESHEET
+   Luxury Floral Concierge Design matching Flowra's signature palette
+   ============================================================================== */
+
+/* Floating Action Button (FAB) */
+.flowra-ai-fab-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.flowra-ai-fab-container * {
+  pointer-events: auto;
+}
+
+.flowra-ai-fab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #c75b87 0%, #a23864 100%);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 230, 240, 0.4);
+  padding: 12px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(199, 91, 135, 0.38), 0 2px 8px rgba(54, 31, 38, 0.15);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  outline: none;
+  position: relative;
+}
+
+.flowra-ai-fab:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(199, 91, 135, 0.5), 0 4px 12px rgba(54, 31, 38, 0.2);
+  background: linear-gradient(135deg, #d36a95 0%, #ad3f6d 100%);
+}
+
+.flowra-ai-fab-icon {
+  font-size: 1.3rem;
+  display: inline-block;
+  animation: pulseFlower 2.5s infinite ease-in-out;
+}
+
+.flowra-ai-fab-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #d4af37;
+  color: #361f26;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  text-transform: uppercase;
+}
+
+@keyframes pulseFlower {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.15) rotate(8deg); }
+}
+
+/* Chat Window Modal */
+.flowra-ai-window {
+  width: 400px;
+  max-width: calc(100vw - 32px);
+  height: 580px;
+  max-height: calc(100vh - 100px);
+  background: #fffdfa;
+  border: 1px solid rgba(199, 91, 135, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(54, 31, 38, 0.22), 0 4px 16px rgba(199, 91, 135, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 14px;
+  animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Header */
+.flowra-ai-header {
+  background: linear-gradient(135deg, #c75b87 0%, #8c3258 100%);
+  color: #ffffff;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.flowra-ai-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flowra-ai-avatar {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  position: relative;
+}
+
+.flowra-ai-status-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+.flowra-ai-title-wrap h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+}
+
+.flowra-ai-title-wrap p {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  color: #fce7ef;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.flowra-ai-header-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.flowra-ai-tool-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.flowra-ai-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Chat Body */
+.flowra-ai-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: #fdfbf7;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.flowra-ai-messages::-webkit-scrollbar {
+  width: 5px;
+}
+
+.flowra-ai-messages::-webkit-scrollbar-thumb {
+  background: #eedbd5;
+  border-radius: 4px;
+}
+
+/* Message Bubbles */
+.flowra-ai-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 88%;
+  font-size: 0.88rem;
+  line-height: 1.48;
+}
+
+.flowra-ai-msg.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #c75b87 0%, #ad446f 100%);
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 16px 16px 2px 16px;
+  box-shadow: 0 4px 12px rgba(199, 91, 135, 0.2);
+}
+
+.flowra-ai-msg.assistant {
+  align-self: flex-start;
+  background: #ffffff;
+  color: #361f26;
+  border: 1px solid #ede1d8;
+  padding: 12px 15px;
+  border-radius: 16px 16px 16px 2px;
+  box-shadow: 0 3px 12px rgba(54, 31, 38, 0.05);
+}
+
+.flowra-ai-msg-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.flowra-ai-msg-time {
+  font-size: 0.65rem;
+  margin-top: 4px;
+  opacity: 0.65;
+  align-self: flex-end;
+}
+
+/* Starter Prompts */
+.flowra-ai-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.flowra-ai-starter-pill {
+  background: #fdf0f5;
+  color: #8c3258;
+  border: 1px solid #f5cfdd;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.flowra-ai-starter-pill:hover {
+  background: #c75b87;
+  color: #ffffff;
+  border-color: #c75b87;
+  transform: translateY(-1px);
+}
+
+/* Recommended Products Container */
+.flowra-ai-products-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.flowra-ai-product-card {
+  display: flex;
+  gap: 12px;
+  background: #fffdfa;
+  border: 1.5px solid #f2e4dc;
+  border-radius: 12px;
+  padding: 10px;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(54, 31, 38, 0.04);
+}
+
+.flowra-ai-product-card:hover {
+  border-color: #c75b87;
+  box-shadow: 0 4px 14px rgba(199, 91, 135, 0.15);
+  transform: translateY(-2px);
+}
+
+.flowra-ai-product-img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ede1d8;
+  flex-shrink: 0;
+  background: #fce7ef;
+}
+
+.flowra-ai-product-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.flowra-ai-product-name {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #361f26;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flowra-ai-product-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.flowra-ai-product-price {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #8c3258;
+}
+
+.flowra-ai-product-stock {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.flowra-ai-product-stock.in-stock {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.flowra-ai-product-stock.low-stock {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.flowra-ai-add-btn {
+  background: #c75b87;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.flowra-ai-add-btn:hover {
+  background: #ad446f;
+  transform: scale(1.02);
+}
+
+/* Explicit Cart Confirmation Card */
+.flowra-ai-confirm-card {
+  background: #fffdfa;
+  border: 2px solid #d4af37;
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 10px;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flowra-ai-confirm-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #8c3258;
+}
+
+.flowra-ai-confirm-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: #fdf5eb;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.flowra-ai-confirm-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.flowra-ai-confirm-details {
+  flex: 1;
+}
+
+.flowra-ai-confirm-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #361f26;
+  margin: 0;
+}
+
+.flowra-ai-confirm-price {
+  font-size: 0.8rem;
+  color: #8c3258;
+  font-weight: 600;
+}
+
+.flowra-ai-confirm-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.flowra-ai-btn-confirm {
+  flex: 2;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.flowra-ai-btn-confirm:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.flowra-ai-btn-cancel {
+  flex: 1;
+  background: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.flowra-ai-btn-cancel:hover {
+  background: #e5e7eb;
+}
+
+/* Loading Animation */
+.flowra-ai-typing {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #ede1d8;
+  padding: 10px 14px;
+  border-radius: 16px;
+  align-self: flex-start;
+  font-size: 0.82rem;
+  color: #8c3258;
+  font-weight: 500;
+}
+
+.flowra-ai-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.flowra-ai-dots span {
+  width: 6px;
+  height: 6px;
+  background: #c75b87;
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite ease-in-out;
+}
+
+.flowra-ai-dots span:nth-child(2) { animation-delay: 0.2s; }
+.flowra-ai-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-6px); }
+}
+
+/* Input Footer */
+.flowra-ai-input-wrap {
+  padding: 12px 14px;
+  background: #ffffff;
+  border-top: 1px solid #ede1d8;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.flowra-ai-input {
+  flex: 1;
+  border: 1.5px solid #ede1d8;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  outline: none;
+  background: #fdfbf7;
+  color: #361f26;
+  transition: all 0.2s ease;
+}
+
+.flowra-ai-input:focus {
+  border-color: #c75b87;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(199, 91, 135, 0.12);
+}
+
+.flowra-ai-send-btn {
+  background: #c75b87;
+  color: #ffffff;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.flowra-ai-send-btn:hover:not(:disabled) {
+  background: #ad446f;
+  transform: scale(1.05);
+}
+
+.flowra-ai-send-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .flowra-ai-window {
+    width: 100vw;
+    height: calc(100vh - 80px);
+    max-height: none;
+    border-radius: 16px 16px 0 0;
+    margin-bottom: 0;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+  .flowra-ai-fab-container {
+    bottom: 16px;
+    right: 16px;
+  }
+}

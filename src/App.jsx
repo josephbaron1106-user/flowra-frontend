@@ -31,6 +31,7 @@ import NotificationsManager from "./admin/NotificationsManager.jsx";
 import AdminSettings from "./admin/AdminSettings.jsx";
 import AdminProfile from "./admin/AdminProfile.jsx";
 import WholesalePosManager from "./admin/WholesalePosManager.jsx";
+import AIChatAssistant from "./AIChatAssistant.jsx";
 
 import { CartProvider } from "./CartContext.jsx";
 import { AdminAuthProvider } from "./admin/AdminAuthContext.jsx";
@@ -41,6 +42,7 @@ function App() {
       <CartProvider>
         <BrowserRouter>
           <LoginModal />
+          <AIChatAssistant />
           <Routes>
             {/* CUSTOMER STOREFRONT ROUTES */}
             <Route path="/" element={<Web1 />} />

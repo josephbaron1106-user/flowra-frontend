@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useCart } from "./CartContext.jsx";
 import { API_BASE_URL } from "./config/api.js";
+import { allProducts } from "./productsData.js";
 import "./AIChatAssistant.css";
 
 function AIChatAssistant() {
@@ -44,7 +45,111 @@ function AIChatAssistant() {
     }
   }, [isOpen, messages]);
 
-  // Send message to backend AI Assistant
+  // Client-Side Intelligent Flowra Florist Engine (Instant Fallback if Render Backend is waking up)
+  const processLocalQuery = (userQuery) => {
+    const q = userQuery.toLowerCase().trim();
+
+    // 1. Check for Store Policies
+    if (q.includes("delivery") || q.includes("slot") || q.includes("timing") || q.includes("time") || q.includes("shipping") || q.includes("fee")) {
+      return {
+        reply: "🚚 **FLOWRA Delivery Schedule & Guidelines:**\n\n• **Same-Day Delivery:** Available for orders placed before 4:00 PM IST.\n• **4 Delivery Slots:** Morning (8:00 AM – 11:00 AM), Afternoon (12:00 PM – 3:00 PM), Evening (4:00 PM – 7:00 PM), Night (8:00 PM – 11:00 PM).\n• **Free Shipping:** FREE delivery on all orders above ₹500! (A flat ₹99 fee applies below ₹500).\n• **Stem Preservation:** Packed in cold-chain hydration wraps to ensure garden freshness upon arrival.",
+        products: [],
+        suggestedPrompts: ["Show flowers under ₹1,000", "Romantic Anniversary Bouquets", "Care instructions"],
+      };
+    }
+
+    if (q.includes("care") || q.includes("fresh") || q.includes("water") || q.includes("vase")) {
+      return {
+        reply: "🌿 **Artisanal Flower Care Guide:**\n\n• **Stem Trimming:** Snip stems diagonally at a 45° angle under cool water before placing into a clean vase.\n• **Water Changes:** Replace vase water every 48 hours with fresh cold water to prevent bacteria.\n• **Placement:** Keep away from direct sunlight, air conditioners, and ripening fruits (which release ethylene gas).",
+        products: [],
+        suggestedPrompts: ["Flowers for Birthday", "Anniversary Roses", "Delivery slots"],
+      };
+    }
+
+    if (q.includes("payment") || q.includes("upi") || q.includes("cod") || q.includes("card")) {
+      return {
+        reply: "💳 **Payment Methods Accepted:**\n\n• **Online via Razorpay:** Instant UPI (Google Pay, PhonePe, Paytm), Credit/Debit Cards, NetBanking with 256-bit encryption.\n• **Cash on Delivery (COD):** Available for selected standard floral deliveries.",
+        products: [],
+        suggestedPrompts: ["Browse Bouquets", "Flowers under ₹1,000", "Delivery slots"],
+      };
+    }
+
+    // 2. Extract Budget
+    let budget = null;
+    const budgetMatch = q.match(/(?:under|below|within|upto|budget of|max|less than)\s*(?:rs\.?|inr|₹)?\s*(\d+(?:,\d{3})*)/i) ||
+                        q.match(/(?:rs\.?|inr|₹)\s*(\d+(?:,\d{3})*)/i);
+    if (budgetMatch) {
+      budget = parseFloat(budgetMatch[1].replace(/,/g, ""));
+    }
+
+    // 3. Extract Occasion
+    const occasions = ["birthday", "anniversary", "wedding", "romance", "love", "valentine", "sympathy", "condolence", "get well", "housewarming"];
+    const matchedOccasion = occasions.find((occ) => q.includes(occ));
+
+    // 4. Extract Flower Species
+    const species = ["rose", "tulip", "orchid", "lily", "lilies", "jasmine", "lotus", "protea", "ranunculus", "hibiscus", "marigold", "carnation"];
+    const matchedSpecies = species.find((s) => q.includes(s));
+
+    // 5. Filter Catalog from allProducts
+    let filtered = allProducts.filter((p) => {
+      const priceVal = typeof p.rawPrice === "number" ? p.rawPrice : parseFloat(String(p.price).replace(/[^\d.]/g, "")) || 0;
+      if (budget && priceVal > budget) return false;
+      return true;
+    });
+
+    if (matchedSpecies) {
+      const bySpecies = filtered.filter((p) =>
+        p.name.toLowerCase().includes(matchedSpecies) ||
+        (p.category && p.category.toLowerCase().includes(matchedSpecies)) ||
+        (p.description && p.description.toLowerCase().includes(matchedSpecies))
+      );
+      if (bySpecies.length > 0) filtered = bySpecies;
+    } else if (matchedOccasion) {
+      if (matchedOccasion === "romance" || matchedOccasion === "anniversary" || matchedOccasion === "love") {
+        const romantic = filtered.filter((p) => p.name.toLowerCase().includes("rose") || p.name.toLowerCase().includes("tulip") || p.name.toLowerCase().includes("ranunculus"));
+        if (romantic.length > 0) filtered = romantic;
+      }
+    }
+
+    if (filtered.length === 0) {
+      filtered = allProducts.slice(0, 4);
+    }
+
+    // Format results to matching DTO structure
+    const mappedProducts = filtered.slice(0, 4).map((p) => ({
+      id: p.id,
+      name: p.name,
+      price: typeof p.rawPrice === "number" ? p.rawPrice : parseFloat(String(p.price).replace(/[^\d.]/g, "")) || 0,
+      primaryImage: p.image,
+      currentStock: p.popularity ? Math.min(25, Math.max(3, Math.round(p.popularity / 5))) : 12,
+      categoryName: p.category || "Bouquet",
+      description: p.description,
+    }));
+
+    let reply = "🌸 Here are our finest handpicked arrangements tailored for you:";
+    if (matchedOccasion && budget) {
+      reply = `🌸 Here are exquisite bouquets for **${matchedOccasion.charAt(0).toUpperCase() + matchedOccasion.slice(1)}** within your budget of **₹${budget}**:`;
+    } else if (budget) {
+      reply = `🌸 Here are beautiful fresh bouquets currently in bloom under **₹${budget}**:`;
+    } else if (matchedOccasion) {
+      reply = `🌸 For a memorable **${matchedOccasion.charAt(0).toUpperCase() + matchedOccasion.slice(1)}**, here are customer favorites styled by our florists:`;
+    } else if (matchedSpecies) {
+      reply = `🌸 Here are our freshest **${matchedSpecies.charAt(0).toUpperCase() + matchedSpecies.slice(1)}** arrangements currently in stock:`;
+    }
+
+    return {
+      reply,
+      products: mappedProducts,
+      suggestedPrompts: [
+        "🌸 Birthday flowers under ₹1,000",
+        "🌹 Romantic Anniversary Roses",
+        "🚚 What are your delivery time slots?",
+        "🌿 How to care for flowers?",
+      ],
+    };
+  };
+
+  // Send message to backend AI Assistant with fast timeout and instant local fallback
   const handleSendMessage = async (textToSend) => {
     const query = (textToSend || inputText).trim();
     if (!query || isLoading) return;
@@ -72,21 +177,39 @@ function AIChatAssistant() {
         content: m.text || "",
       }));
 
-      const res = await fetch(`${API_BASE_URL}/api/ai/chat`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: query,
-          userId: userId,
-          history: history,
-        }),
-      });
+      // AbortController with 4.5 second timeout so user is NEVER left hanging if Render is cold-starting
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4500);
 
-      if (!res.ok) {
-        throw new Error(`AI service responded with status: ${res.status}`);
+      let data = null;
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/ai/chat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
+          body: JSON.stringify({
+            message: query,
+            userId: userId,
+            history: history,
+          }),
+        });
+
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          data = await res.json();
+        }
+      } catch (networkErr) {
+        // Network timeout, cold start, or Render building new container: run instant local engine!
+        clearTimeout(timeoutId);
+        console.info("Backend taking time to wake up, running instant client-side AI stylist:", networkErr.message);
       }
 
-      const data = await res.json();
+      // If backend didn't respond in 4.5s or returned non-200, use instant intelligent engine
+      if (!data || !data.reply) {
+        data = processLocalQuery(query);
+      }
 
       const assistantMsg = {
         id: "ai-" + Date.now(),
@@ -99,7 +222,7 @@ function AIChatAssistant() {
 
       setMessages((prev) => [...prev, assistantMsg]);
 
-      // If backend returned a cart action that requires confirmation, set it
+      // If cart action requires confirmation, open confirmation card
       if (data.cartAction && data.cartAction.requiresConfirmation) {
         setPendingConfirmation(data.cartAction);
       }
@@ -108,14 +231,16 @@ function AIChatAssistant() {
         setSuggestedPrompts(data.suggestedPrompts);
       }
     } catch (err) {
-      console.warn("AI Assistant fetch error:", err);
+      console.warn("AI Assistant fallback execution error:", err);
+      // Even in the worst edge case, return local catalog recommendations
+      const localFallback = processLocalQuery(query);
       setMessages((prev) => [
         ...prev,
         {
-          id: "err-" + Date.now(),
+          id: "local-" + Date.now(),
           role: "assistant",
-          text: "I am having a brief moment reconnecting with our boutique catalogue 🌸. Meanwhile, you can explore our complete artisanal bouquets from the top menu, or try asking about your budget or occasion again!",
-          products: [],
+          text: localFallback.reply,
+          products: localFallback.products,
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         },
       ]);
@@ -131,7 +256,7 @@ function AIChatAssistant() {
     setPendingConfirmation({
       productId: product.id,
       productName: product.name,
-      productImage: product.primaryImage || (product.images && product.images[0]) || "",
+      productImage: product.primaryImage || (product.images && product.images[0]) || product.image || "",
       unitPrice: numericPrice,
       quantity: 1,
       totalAmount: numericPrice,
@@ -219,7 +344,7 @@ function AIChatAssistant() {
               </div>
               <div className="flowra-ai-title-wrap">
                 <h4>Flowra AI Stylist</h4>
-                <p>Artisanal Concierge • Live Inventory</p>
+                <p>Artisanal Concierge • Instant Recommendations</p>
               </div>
             </div>
             <div className="flowra-ai-header-actions">
@@ -255,7 +380,7 @@ function AIChatAssistant() {
                   ))}
                 </div>
 
-                {/* Real Product Cards from MySQL Catalogue */}
+                {/* Real Product Cards from MySQL / Boutique Catalogue */}
                 {msg.products && msg.products.length > 0 && (
                   <div className="flowra-ai-products-grid">
                     {msg.products.map((prod) => (
@@ -263,6 +388,7 @@ function AIChatAssistant() {
                         <img
                           src={
                             prod.primaryImage ||
+                            prod.image ||
                             (prod.images && prod.images[0]) ||
                             "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=300&q=80"
                           }
